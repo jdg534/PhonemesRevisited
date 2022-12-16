@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+
+
+# Dev env
+DEV_ENV/
