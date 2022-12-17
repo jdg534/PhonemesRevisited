@@ -1,3 +1,6 @@
 [submodule "Submodules/SignalAnalysis"]
 	path = Submodules/SignalAnalysis
 	url = https://github.com/jdg534/SignalAnalysis.git
+[submodule "Submodules/sdl"]
+	path = Submodules/sdl
+	url = https://github.com/libsdl-org/SDL.git
