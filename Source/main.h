@@ -5,3 +5,5 @@
 int main();
 
 void drawState(SDL_Renderer* renderer);
+
+void testWriteJson();

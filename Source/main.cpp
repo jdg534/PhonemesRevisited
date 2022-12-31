@@ -3,6 +3,9 @@
 #include <SDL3/SDL.h>
 
 #include <memory>
+#include <fstream>
+
+#include <nlohmann/json.hpp>
 
 int main()
 {
@@ -29,6 +32,7 @@ int main()
 	SDL_HideWindow(Window);
 	SDL_DestroyWindow(Window);
 	SDL_Quit();
+	testWriteJson();
 	return 0;
 }
 
@@ -58,4 +62,17 @@ void drawState(SDL_Renderer* renderer)
 	{
 		SDL_Log("Error message: %s \n", SDL_GetError());
 	}
+}
+
+void testWriteJson()
+{
+	nlohmann::json toDump =
+	{
+		{"someJson", true},
+		{ "pi", 3.141f }
+	};
+	std::ofstream output;
+	output.open("test.json", std::ios::out);
+	output << toDump.dump(1);
+	output.close();
 }

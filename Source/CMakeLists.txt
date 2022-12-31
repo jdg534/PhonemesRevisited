@@ -11,6 +11,10 @@ target_link_libraries(TestExecutable SignalAnalysis)
 target_include_directories(TestExecutable PUBLIC SdlHeaderDir)
 target_link_libraries(TestExecutable SDL3-static)
 
+# nlohmann_json
+target_include_directories(TestExecutable PUBLIC JsonHeaderDir)
+
+
 # Copy the phoneme folder to the output directory.
 add_custom_command(
 	TARGET TestExecutable POST_BUILD
