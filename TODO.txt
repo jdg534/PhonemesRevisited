@@ -1,9 +1,8 @@
 Tasks todo:
-1. Update the submodules to include and XML or JSON parsing library.
-2. Add visual states files using from from task 1.
-3. Add manifest file for the visual state and phoneme associations, use format from task 1.
-4. Update SignalAnalysis to support computing a DFT for only target frequencies.  According to https://en.wikipedia.org/wiki/Voice_frequency we only need to care about 85hz to 255hz.
-5. Update have a mechanisum for calculating DFTs asyncronusly, possibly via threading.
+1. Add visual states files using json.
+2. Add manifest file for the visual state and phoneme associations, use json.
+3. Update SignalAnalysis to support computing a DFT for only target frequencies.  According to https://en.wikipedia.org/wiki/Voice_frequency we only need to care about 85hz to 255hz.
+4. Update have a mechanisum for calculating DFTs asyncronusly, possibly via threading.
 
 Optional tasks only try once above is done:
 1. Add phonese and visual states for a tonal language, Manderin seems approeriate given 4 tones on vowels.
