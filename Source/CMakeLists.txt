@@ -2,11 +2,19 @@ cmake_minimum_required(VERSION 3.10.0)
 
 FILE(GLOB_RECURSE SouceFiles *.cpp *.h)
 
-add_executable(${PROJECT_NAME} ${SouceFiles})
+add_executable(TestExecutable ${SouceFiles})
 
 # Link to submodules here.
-target_include_directories(${PROJECT_NAME} PUBLIC SignalAnalysisHeaderDir)
-target_link_libraries(${PROJECT_NAME} SignalAnalysis)
+target_include_directories(TestExecutable PUBLIC SignalAnalysisHeaderDir)
+target_link_libraries(TestExecutable SignalAnalysis)
 
-target_include_directories(${PROJECT_NAME} PUBLIC SdlHeaderDir)
-target_link_libraries(${PROJECT_NAME} SDL3-static)
+target_include_directories(TestExecutable PUBLIC SdlHeaderDir)
+target_link_libraries(TestExecutable SDL3-static)
+
+# Copy the phoneme folder to the output directory.
+add_custom_command(
+	TARGET TestExecutable POST_BUILD
+	COMMAND ${CMAKE_COMMAND} -E copy_directory
+			"${PROJECT_SOURCE_DIR}/Phonemes"
+			$<TARGET_FILE_DIR:TestExecutable>
+)
