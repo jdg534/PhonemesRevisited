@@ -20,5 +20,5 @@ add_custom_command(
 	TARGET TestExecutable POST_BUILD
 	COMMAND ${CMAKE_COMMAND} -E copy_directory
 			"${PROJECT_SOURCE_DIR}/Phonemes"
-			$<TARGET_FILE_DIR:TestExecutable>
+			$<TARGET_FILE_DIR:TestExecutable>/Phonemes
 )
