@@ -1,0 +1,49 @@
+{
+	"phonemes" :
+	[
+		{ "symbol" : "a", "file_path" : "English/a.wav" },
+		{ "symbol" : "ar", "file_path" : "English/ar.wav" },
+		{ "symbol" : "au", "file_path" : "English/au.wav" },
+		{ "symbol" : "ay", "file_path" : "English/ay.wav" },
+		{ "symbol" : "b", "file_path" : "English/b.wav" },
+		{ "symbol" : "ch", "file_path" : "English/ch.wav" },
+		{ "symbol" : "d", "file_path" : "English/d.wav" },
+		{ "symbol" : "ea", "file_path" : "English/ea.wav" },
+		{ "symbol" : "ee", "file_path" : "English/ee.wav" },
+		{ "symbol" : "ee", "file_path" : "English/ee.wav" },
+		{ "symbol" : "g", "file_path" : "English/g.wav" },
+		{ "symbol" : "gg", "file_path" : "English/gg.wav" },
+		{ "symbol" : "h", "file_path" : "English/h.wav" },
+		{ "symbol" : "i", "file_path" : "English/i.wav" },
+		{ "symbol" : "iy", "file_path" : "English/iy.wav" },
+		{ "symbol" : "jg", "file_path" : "English/jg.wav" },
+		{ "symbol" : "k", "file_path" : "English/k.wav" },
+		{ "symbol" : "l", "file_path" : "English/l.wav" },
+		{ "symbol" : "m", "file_path" : "English/m.wav" },
+		{ "symbol" : "n", "file_path" : "English/n.wav" },
+		{ "symbol" : "nn", "file_path" : "English/nn.wav" },
+		{ "symbol" : "o", "file_path" : "English/o.wav" },
+		{ "symbol" : "oo", "file_path" : "English/oo.wav" },
+		{ "symbol" : "or", "file_path" : "English/or.wav" },
+		{ "symbol" : "ou", "file_path" : "English/ou.wav" },
+		{ "symbol" : "oy", "file_path" : "English/oy.wav" },
+		{ "symbol" : "p", "file_path" : "English/p.wav" },
+		{ "symbol" : "r", "file_path" : "English/r.wav" },
+		{ "symbol" : "s", "file_path" : "English/s.wav" },
+		{ "symbol" : "sh", "file_path" : "English/sh.wav" },
+		{ "symbol" : "t", "file_path" : "English/t.wav" },
+		{ "symbol" : "th", "file_path" : "English/th.wav" },
+		{ "symbol" : "thv", "file_path" : "English/thv.wav" },
+		{ "symbol" : "u", "file_path" : "English/u.wav" },
+		{ "symbol" : "uAlt", "file_path" : "English/uAlt.wav" },
+		{ "symbol" : "v", "file_path" : "English/v.wav" },
+		{ "symbol" : "w", "file_path" : "English/w.wav" },
+		{ "symbol" : "y", "file_path" : "English/y.wav" },
+		{ "symbol" : "z", "file_path" : "English/z.wav" }
+	],
+	"analysis" :
+	{
+		"moving_avarage_filter" : 0,
+		"target_frequencies" : [ 1.0, 2.0, 3.0, 4.0 ]
+	}
+}
