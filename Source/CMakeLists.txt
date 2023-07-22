@@ -13,6 +13,7 @@ target_link_libraries(TestExecutable SDL3-static)
 
 # nlohmann_json
 target_include_directories(TestExecutable PUBLIC JsonHeaderDir)
+target_link_libraries(TestExecutable nlohmann_json)
 
 
 # Copy the phoneme folder to the output directory.

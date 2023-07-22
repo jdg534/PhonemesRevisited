@@ -7,4 +7,3 @@ add_subdirectory(sdl)
 add_subdirectory(json)
 
 set(SdlHeaderDir ${CMAKE_CURRENT_SOURCE_DIR}/sdl/include CACHE INTERNAL "" FORCE)
-set(JsonHeaderDir ${CMAKE_CURRENT_SOURCE_DIR}/json/include CACHE INTERNAL "" FORCE)
