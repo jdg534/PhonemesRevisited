@@ -23,3 +23,11 @@ add_custom_command(
 			"${PROJECT_SOURCE_DIR}/Phonemes"
 			${CMAKE_CURRENT_BINARY_DIR}/Phonemes
 )
+
+# Copy the Visemes folder to the output directory.
+add_custom_command(
+	TARGET TestExecutable POST_BUILD
+	COMMAND ${CMAKE_COMMAND} -E copy_directory
+			"${PROJECT_SOURCE_DIR}/Visemes"
+			${CMAKE_CURRENT_BINARY_DIR}/Visemes
+)
