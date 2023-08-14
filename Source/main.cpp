@@ -1,5 +1,7 @@
 #include "main.h"
 
+#include "PhonemeIdentification.h"
+
 #include <SDL3/SDL.h>
 
 #include <memory>
@@ -14,6 +16,10 @@ int main()
 	SDL_ShowWindow(Window);
 	SDL_Renderer* Renderer = SDL_CreateRenderer(Window, nullptr, 0);
 	SDL_SetRenderDrawColor(Renderer, 255, 255, 255, 255);
+
+	PhonemeIdentification* PhonemeIdentifier = new PhonemeIdentification;
+	PhonemeIdentifier->Initialise("Phonemes/phonemes.json");
+
 	bool CloseRequested = false;
 	while (!CloseRequested)
 	{
@@ -33,6 +39,7 @@ int main()
 	SDL_DestroyWindow(Window);
 	SDL_Quit();
 	testWriteJson();
+	delete PhonemeIdentifier;
 	return 0;
 }
 
