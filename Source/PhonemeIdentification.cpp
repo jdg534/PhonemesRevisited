@@ -1,6 +1,7 @@
 #include "PhonemeIdentification.h"
 
 #include <fstream>
+#include <exception>
 
 #include <SDL3/SDL.h>
 
@@ -51,9 +52,6 @@ void PhonemeIdentification::InitialiseComparisonData(const nlohmann::json& phone
 	const size_t NumTargetFrequencies = TargetFrequenciesRef.size();
 
 	SDL_AudioSpec SpecToAnalyse;
-	SDL_memset(&SpecToAnalyse, 0, sizeof(SDL_AudioSpec));
-	SDL_GetAudioDeviceSpec(0, 0, &SpecToAnalyse);
-
 	for (const nlohmann::json& PhonemeNode : phonemesNode)
 	{
 		const string PhonemeSymbol = PhonemeNode["symbol"];
@@ -63,14 +61,42 @@ void PhonemeIdentification::InitialiseComparisonData(const nlohmann::json& phone
 
 		Uint8* AudioBuffer = nullptr;
 		Uint32 AudioBufferLength = 0;
+		SDL_memset(&SpecToAnalyse, 0, sizeof(SDL_AudioSpec));
 		SDL_LoadWAV(FilePath.c_str(), &SpecToAnalyse, &AudioBuffer, &AudioBufferLength);
 
 		// figure out how to get the audio samples in a float form.
+		if (SpecToAnalyse.format & AUDIO_F32)
+		{
+			// it's already in float range, just DFT the target frequencies.
+			AddComparisonData(PhonemeSymbol, reinterpret_cast<float*>(AudioBuffer), AudioBufferLength / sizeof(float));
+		}
+		else if (SpecToAnalyse.format & AUDIO_U16)
+		{
+			// convert to float range, then DFT the target frequencies.
+			const size_t numSamples = AudioBufferLength / sizeof(Uint16);
+
+		}
+		else if (SpecToAnalyse.format & AUDIO_S16)
+		{
+			// convert to float range, then DFT the target frequencies.
+			const size_t numSamples = AudioBufferLength / sizeof(int16_t);
+
+		}
+		else
+		{
+			throw exception("Unrecognised audio format");
+		}
 
 		SDL_FreeWAV(AudioBuffer);
 		AudioBuffer = nullptr;
 		AudioBufferLength = 0;
+		SDL_memset(&SpecToAnalyse, 0, sizeof(SDL_AudioSpec));
 	}
+}
+
+void PhonemeIdentification::AddComparisonData(const std::string& phoneticSymbol, const float* waveform, const size_t numWaveformSamples)
+{
+	// FUN!
 }
 
 const std::string& PhonemeIdentification::PhonemesRootDirectory() const

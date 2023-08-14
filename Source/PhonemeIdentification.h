@@ -19,6 +19,7 @@ private:
 
 	void InitialiseAnalysis(const nlohmann::json& analysisNode);
 	void InitialiseComparisonData(const nlohmann::json& phonemesNode);
+	void AddComparisonData(const std::string& phoneticSymbol, const float* waveform, const size_t numWaveformSamples);
 
 	const std::string& PhonemesRootDirectory() const;
 	const std::map<std::string, std::vector<float>>& ComparisonData() const;
