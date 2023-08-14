@@ -4,7 +4,7 @@
 
 #include <SDL3/SDL.h>
 
-// #include <Signal.h> refactor to <SignalAnalysis.h> get's mixed up with <signal.h> from STL.
+#include <SignalAnalysis.h>
 
 void PhonemeIdentification::Initialise(const std::string& file_path)
 {

@@ -5,7 +5,7 @@ FILE(GLOB_RECURSE SouceFiles *.cpp *.h)
 add_executable(TestExecutable ${SouceFiles})
 
 # Link to submodules here.
-target_include_directories(TestExecutable PUBLIC SignalAnalysisHeaderDir)
+target_include_directories(TestExecutable PUBLIC ${SignalAnalysisHeaderDir})
 target_link_libraries(TestExecutable SignalAnalysis)
 
 target_include_directories(TestExecutable PUBLIC SdlHeaderDir)
