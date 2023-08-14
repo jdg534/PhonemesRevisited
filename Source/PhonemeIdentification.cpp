@@ -50,20 +50,27 @@ void PhonemeIdentification::InitialiseComparisonData(const nlohmann::json& phone
 	const auto& TargetFrequenciesRef = TargetFrequencies();
 	const size_t NumTargetFrequencies = TargetFrequenciesRef.size();
 
+	SDL_AudioSpec SpecToAnalyse;
+	SDL_memset(&SpecToAnalyse, 0, sizeof(SDL_AudioSpec));
+	SDL_GetAudioDeviceSpec(0, 0, &SpecToAnalyse);
+
 	for (const nlohmann::json& PhonemeNode : phonemesNode)
 	{
 		const string PhonemeSymbol = PhonemeNode["symbol"];
 		const string FilePath = PhonemesRootDirectory() + string(PhonemeNode["file_path"]);
 
 		// Get SDL to load the waveform (float format), remember that these are relative file paths.
-	}
 
-	/*
-	SDL_AudioSpec AudioSpec;
-	SDL_memset(&AudioSpec, 0, sizeof(SDL_AudioSpec));
-	SDL_GetAudioDeviceSpec(0, 0, &AudioSpec);
-	SDL_LoadWAV("", &AudioSpec, nullptr, nullptr);
-	*/
+		Uint8* AudioBuffer = nullptr;
+		Uint32 AudioBufferLength = 0;
+		SDL_LoadWAV(FilePath.c_str(), &SpecToAnalyse, &AudioBuffer, &AudioBufferLength);
+
+		// figure out how to get the audio samples in a float form.
+
+		SDL_FreeWAV(AudioBuffer);
+		AudioBuffer = nullptr;
+		AudioBufferLength = 0;
+	}
 }
 
 const std::string& PhonemeIdentification::PhonemesRootDirectory() const
