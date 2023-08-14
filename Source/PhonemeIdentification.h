@@ -20,10 +20,12 @@ private:
 	void InitialiseAnalysis(const nlohmann::json& analysisNode);
 	void InitialiseComparisonData(const nlohmann::json& phonemesNode);
 
+	const std::string& PhonemesRootDirectory() const;
 	const std::map<std::string, std::vector<float>>& ComparisonData() const;
 	const std::vector<float>& TargetFrequencies() const;
 	unsigned int MovingAvarageFilterNumberOfSamples() const;
 
+	std::string m_PhonemesRootDirectory;
 	std::map<std::string, std::vector<float>> m_ComparisonData;
 	std::vector<float> m_TargetFrequencies;
 	unsigned int m_MovingAvarageFilterNumberOfSamples { 1 };

@@ -8,9 +8,9 @@
 
 void PhonemeIdentification::Initialise(const std::string& file_path)
 {
-
 	std::ifstream InputFile = std::ifstream(file_path);
 	if (!InputFile.good()) { return; }
+	m_PhonemesRootDirectory = file_path.substr(0, file_path.find_first_of('/') + 1);
 	const nlohmann::json Config = nlohmann::json::parse(InputFile);
 	if (Config.contains("analysis")) { InitialiseAnalysis(Config["analysis"]); }
 	if (Config.contains("phonemes")) { InitialiseComparisonData(Config["phonemes"]); }
@@ -19,7 +19,8 @@ void PhonemeIdentification::Initialise(const std::string& file_path)
 bool PhonemeIdentification::IsInitialised() const
 {
 	return !ComparisonData().empty()
-		&& !TargetFrequencies().empty();
+		&& !TargetFrequencies().empty()
+		&& !m_PhonemesRootDirectory.empty();
 }
 
 
@@ -52,7 +53,7 @@ void PhonemeIdentification::InitialiseComparisonData(const nlohmann::json& phone
 	for (const nlohmann::json& PhonemeNode : phonemesNode)
 	{
 		const string PhonemeSymbol = PhonemeNode["symbol"];
-		const string FilePath = PhonemeNode["file_path"];
+		const string FilePath = PhonemesRootDirectory() + string(PhonemeNode["file_path"]);
 
 		// Get SDL to load the waveform (float format), remember that these are relative file paths.
 	}
@@ -63,6 +64,11 @@ void PhonemeIdentification::InitialiseComparisonData(const nlohmann::json& phone
 	SDL_GetAudioDeviceSpec(0, 0, &AudioSpec);
 	SDL_LoadWAV("", &AudioSpec, nullptr, nullptr);
 	*/
+}
+
+const std::string& PhonemeIdentification::PhonemesRootDirectory() const
+{
+	return m_PhonemesRootDirectory;
 }
 
 const std::map<std::string, std::vector<float>>& PhonemeIdentification::ComparisonData() const
