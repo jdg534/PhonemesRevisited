@@ -1,7 +1,8 @@
 #include "PhonemeIdentification.h"
 
-#include <fstream>
+#include <algorithm>
 #include <exception>
+#include <fstream>
 
 #include <SDL3/SDL.h>
 
@@ -58,7 +59,6 @@ void PhonemeIdentification::InitialiseComparisonData(const nlohmann::json& phone
 		const string FilePath = PhonemesRootDirectory() + string(PhonemeNode["file_path"]);
 
 		// Get SDL to load the waveform (float format), remember that these are relative file paths.
-
 		Uint8* AudioBuffer = nullptr;
 		Uint32 AudioBufferLength = 0;
 		SDL_memset(&SpecToAnalyse, 0, sizeof(SDL_AudioSpec));
@@ -67,20 +67,39 @@ void PhonemeIdentification::InitialiseComparisonData(const nlohmann::json& phone
 		// figure out how to get the audio samples in a float form.
 		if (SpecToAnalyse.format & AUDIO_F32)
 		{
-			// it's already in float range, just DFT the target frequencies.
-			AddComparisonData(PhonemeSymbol, reinterpret_cast<float*>(AudioBuffer), AudioBufferLength / sizeof(float));
+			const size_t NumSamples = AudioBufferLength / sizeof(float);
+			float* AsCorrectType = reinterpret_cast<float*>(AudioBuffer);
+			if (MovingAvarageFilterNumberOfSamples() > 1)
+			{
+				Signal::Filters::MovingAverageSubsquentPointsF(AsCorrectType, NumSamples, AsCorrectType, MovingAvarageFilterNumberOfSamples());
+			}
+			AddComparisonData(PhonemeSymbol, AsCorrectType, NumSamples);
 		}
 		else if (SpecToAnalyse.format & AUDIO_U16)
 		{
 			// convert to float range, then DFT the target frequencies.
-			const size_t numSamples = AudioBufferLength / sizeof(Uint16);
-
+			const size_t NumSamples = AudioBufferLength / sizeof(Uint16);
+			float* FloatBuffer = new float[NumSamples];
+			Signal::Conversion::u16ToF(reinterpret_cast<Uint16*>(AudioBuffer), NumSamples, FloatBuffer);
+			if (MovingAvarageFilterNumberOfSamples() > 1)
+			{
+				Signal::Filters::MovingAverageSubsquentPointsF(FloatBuffer, NumSamples, FloatBuffer, MovingAvarageFilterNumberOfSamples());
+			}
+			AddComparisonData(PhonemeSymbol, FloatBuffer, NumSamples);
+			delete[] FloatBuffer;
 		}
 		else if (SpecToAnalyse.format & AUDIO_S16)
 		{
 			// convert to float range, then DFT the target frequencies.
-			const size_t numSamples = AudioBufferLength / sizeof(int16_t);
-
+			const size_t NumSamples = AudioBufferLength / sizeof(int16_t);
+			float* FloatBuffer = new float[NumSamples];
+			Signal::Conversion::i16ToF(reinterpret_cast<int16_t*>(AudioBuffer), NumSamples, FloatBuffer);
+			if (MovingAvarageFilterNumberOfSamples() > 1)
+			{
+				Signal::Filters::MovingAverageSubsquentPointsF(FloatBuffer, NumSamples, FloatBuffer, MovingAvarageFilterNumberOfSamples());
+			}
+			AddComparisonData(PhonemeSymbol, FloatBuffer, NumSamples);
+			delete[] FloatBuffer;
 		}
 		else
 		{
@@ -96,7 +115,23 @@ void PhonemeIdentification::InitialiseComparisonData(const nlohmann::json& phone
 
 void PhonemeIdentification::AddComparisonData(const std::string& phoneticSymbol, const float* waveform, const size_t numWaveformSamples)
 {
-	// FUN!
+	using namespace std;
+	const auto& ComparisonDataRef = ComparisonData();
+	if (ComparisonDataRef.find(phoneticSymbol) != ComparisonDataRef.cend())
+	{
+		throw runtime_error("duplicate phonetic symbol: " + phoneticSymbol);
+	}
+	const auto& TargetFrequenciesRef = TargetFrequencies();
+	if (TargetFrequenciesRef.empty())
+	{
+		throw runtime_error("no target frequencies");
+	}
+	// -1.0f to 1.0f range expected.
+	const size_t NumTargetFrequencies = TargetFrequenciesRef.size();
+	std::vector<float> TargetFrequenciesOutput(NumTargetFrequencies);
+	std::memset(&TargetFrequenciesOutput[0], 0, NumTargetFrequencies * sizeof(float));
+	Signal::FourierTransforms::DiscreteFourierTransformFullTargetFrequenciesF(waveform, numWaveformSamples, NumTargetFrequencies, &TargetFrequenciesRef[0], &TargetFrequenciesOutput[0]);
+	m_ComparisonData.emplace(phoneticSymbol, TargetFrequenciesOutput);
 }
 
 const std::string& PhonemeIdentification::PhonemesRootDirectory() const
