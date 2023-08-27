@@ -19,6 +19,13 @@ private:
 
 	void InitialiseAnalysis(const nlohmann::json& analysisNode);
 	void InitialiseComparisonData(const nlohmann::json& phonemesNode);
+
+	// Ignore endianness for now.
+	void AddComparisonData(const std::string& phoneticSymbol, const Uint8* waveform, const size_t numWaveformSamples);
+	void AddComparisonData(const std::string& phoneticSymbol, const Sint8* waveform, const size_t numWaveformSamples);
+	void AddComparisonData(const std::string& phoneticSymbol, const Uint16* waveform, const size_t numWaveformSamples);
+	void AddComparisonData(const std::string& phoneticSymbol, const Sint16* waveform, const size_t numWaveformSamples);
+	void AddComparisonData(const std::string& phoneticSymbol, const Sint32* waveform, const size_t numWaveformSamples);
 	void AddComparisonData(const std::string& phoneticSymbol, const float* waveform, const size_t numWaveformSamples);
 
 	const std::string& PhonemesRootDirectory() const;
