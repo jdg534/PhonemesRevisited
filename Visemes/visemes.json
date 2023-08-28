@@ -2,7 +2,7 @@
 	"visemes" :
 	[
 		{ "symbol" : "default", "file_path" : "Silence.viseme" },
-		{ "symbol" : "Ah", "file_path" : "Silence.viseme" },
+		{ "symbol" : "Ah", "file_path" : "Ah.viseme" },
 		{ "symbol" : "Aa", "file_path" : "Silence.viseme" },
 		{ "symbol" : "Eh", "file_path" : "Silence.viseme" },
 		{ "symbol" : "Ee", "file_path" : "Silence.viseme" },
