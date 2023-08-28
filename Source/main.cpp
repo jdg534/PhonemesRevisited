@@ -1,6 +1,7 @@
 #include "main.h"
 
 #include "PhonemeIdentification.h"
+#include "VisemeAnimatedMesh.h"
 
 #include <SDL3/SDL.h>
 
@@ -19,6 +20,8 @@ int main()
 
 	PhonemeIdentification* PhonemeIdentifier = new PhonemeIdentification;
 	PhonemeIdentifier->Initialise("Phonemes/phonemes.json");
+	VisemeAnimatedMesh* VisemeMesh = new VisemeAnimatedMesh(PhonemeIdentifier);
+	VisemeMesh->Initialise("Visemes/visemes.json");
 
 	bool CloseRequested = false;
 	while (!CloseRequested)
@@ -40,11 +43,13 @@ int main()
 	SDL_Quit();
 	testWriteJson();
 	delete PhonemeIdentifier;
+	delete VisemeMesh;
 	return 0;
 }
 
 void drawState(SDL_Renderer* renderer)
 {
+	// Move this logic into the VisemeAnimatedMesh, base off the visual state.
 	int width = 0, height = 0;
 	SDL_GetRendererOutputSize(renderer, &width, &height);
 	SDL_Point LineVerticies[8];

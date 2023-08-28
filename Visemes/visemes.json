@@ -21,7 +21,7 @@
 		{ "symbol" : "S", "file_path" : "Silence.viseme" },
 		{ "symbol" : "ShChZh", "file_path" : "Silence.viseme" },
 		{ "symbol" : "Th", "file_path" : "Silence.viseme" },
-		{ "symbol" : "FV", "file_path" : "Silence.viseme" },
+		{ "symbol" : "FV", "file_path" : "Silence.viseme" }
 	],
 	"phoneme_associations" :
 	[
@@ -33,7 +33,6 @@
 		{ "phoneme_symbol" : "ch", "viseme_symbol" : "default" },
 		{ "phoneme_symbol" : "d", "viseme_symbol" : "default" },
 		{ "phoneme_symbol" : "ea", "viseme_symbol" : "default" },
-		{ "phoneme_symbol" : "ee", "viseme_symbol" : "default" },
 		{ "phoneme_symbol" : "ee", "viseme_symbol" : "default" },
 		{ "phoneme_symbol" : "g", "viseme_symbol" : "default" },
 		{ "phoneme_symbol" : "gg", "viseme_symbol" : "default" },

@@ -26,6 +26,11 @@ bool PhonemeIdentification::IsInitialised() const
 		&& !m_PhonemesRootDirectory.empty();
 }
 
+bool PhonemeIdentification::IsPhonemePresent(const std::string& phoneticSymbol) const
+{
+	return ComparisonData().find(phoneticSymbol) != ComparisonData().cend();
+}
+
 void PhonemeIdentification::InitialiseAnalysis(const nlohmann::json& analysisNode)
 {
 	/* Structure: { "moving_avarage_filter" : 5, "target_frequencies" : [ 80.0, 85.0]}*/

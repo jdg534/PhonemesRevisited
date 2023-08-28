@@ -6,6 +6,8 @@
 
 #include <nlohmann/json.hpp>
 
+#include <SDL3/SDL_stdinc.h>
+
 class PhonemeIdentification
 {
 public:
@@ -14,6 +16,7 @@ public:
 
 	bool IsInitialised() const;
 
+	bool IsPhonemePresent(const std::string& phoneticSymbol) const;
 
 private:
 
